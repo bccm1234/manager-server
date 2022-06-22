@@ -51,7 +51,7 @@ router.post('/operate', async (ctx) => {
     } else if (action == 'edit') {
       if (_id) {
         let params = { roleName, remark }
-        params.update = new Date();
+        params.updateTime = new Date();
         res = await Role.findByIdAndUpdate(_id, params)
         info = "编辑成功"
       } else {

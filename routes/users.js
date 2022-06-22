@@ -154,16 +154,16 @@ async function getMenuList(userRole, roleKeys) {
   } else {
     // 根据用户拥有的角色，获取权限列表
     // 现查找用户对应的角色有哪些
-    let roleList = await Role.find({ _id: { $in: roleKeys } })
+    let roleList = await Role.find({ id: { $in: roleKeys } })
     let permissionList = []
     roleList.map(role => {
       let { checkedKeys, halfCheckedKeys } = role.permissionList;
       permissionList = permissionList.concat([...checkedKeys, ...halfCheckedKeys])
     })
     permissionList = [...new Set(permissionList)]
-    rootList = await Menu.find({ _id: { $in: permissionList } })
+    rootList = await Menu.find({_v: { $in: permissionList }})
   }
-  return util.getTreeMenu(rootList, null, [])
+return util.getTreeMenu(rootList, null, [])
 }
 
 function getAction(list) {

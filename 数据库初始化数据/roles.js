@@ -24,15 +24,33 @@ db.createCollection("roles");
 // ----------------------------
 // Documents of roles
 // ----------------------------
-db.getCollection("roles").insert([ {
-    _id: ObjectId("62ad94f5ffbeca40244759d1"),
-    permissionList: {
-        checkedKeys: [ ],
-        halfCheckedKeys: [ ]
+db.getCollection("roles").insert({
+    "_id": {
+      "$oid": "62ad94f5ffbeca40244759d1"
     },
-    updateTime: ISODate("2022-06-18T08:54:04.938Z"),
-    createTime: ISODate("2022-06-18T08:54:04.938Z"),
-    roleName: "系统管理员",
-    remark: "系统管理员",
-    __v: NumberInt("0")
-} ]);
+    "permissionList": {
+      "checkedKeys": [
+        "600d4075e218daaf4ec77e52",
+        "601ca9a8a794e23c2e42efab",
+        "60325425a821c6bb59084545",
+        "60325461a821c6bb59084546",
+        "600d4075e218daaf4ec77e53",
+        "601ca9a8a794e23c2e42ef3c",
+        "60325425a821c6bb59084572"
+      ],
+      "halfCheckedKeys": []
+    },
+    "updateTime": {
+      "$date": {
+        "$numberLong": "1655542444938"
+      }
+    },
+    "createTime": {
+      "$date": {
+        "$numberLong": "1655542444938"
+      }
+    },
+    "roleName": "系统管理员",
+    "remark": "系统管理员",
+    "__v": 0
+  });

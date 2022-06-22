@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const userSchema = mongoose.Schema({
+const roleSchema = mongoose.Schema({
     roleName: String,
     remark: String,
     permissionList: {
@@ -16,4 +16,4 @@ const userSchema = mongoose.Schema({
     }
 })
 
-module.exports = mongoose.model("roles", userSchema, "roles")
+module.exports = mongoose.model("roles", roleSchema, "roles")
