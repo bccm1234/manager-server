@@ -7,4 +7,4 @@ const counterSchema = mongoose.Schema({
   sequence_value: Number,
 });
 
-module.exports = mongoose.model("counter", counterSchema, "counters");
+module.exports = mongoose.model("counter", counterSchema, "counter");

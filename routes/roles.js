@@ -6,15 +6,15 @@ const Role = require("../models/roleSchema");
 const util = require("../utils/util");
 router.prefix("/roles");
 
-// 查询所有角色列表
-router.get("/allList", async (ctx) => {
-  try {
-    const list = await Role.find({}, "_id roleName");
-    ctx.body = util.success(list);
-  } catch (error) {
-    ctx.body = util.fail(`查询失败:${error.stack}`);
-  }
-});
+// 查询所有角色列表(此接口目前未使用,其可以被下一个接口完全代替)
+// router.get("/allList", async (ctx) => {
+//   try {
+//     const list = await Role.find({}, "_id roleName");
+//     ctx.body = util.success(list);
+//   } catch (error) {
+//     ctx.body = util.fail(`查询失败:${error.stack}`);
+//   }
+// });
 
 // 按页获取角色列表
 router.get("/list", async (ctx) => {

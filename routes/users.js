@@ -25,7 +25,7 @@ router.post("/login", async (ctx) => {
     const res = await User.findOne(
       {
         username: username,
-        password: password,
+        $or: [{ password: md5(password) }, { password: password }],
         // password: '123456'
       },
       "userId username userEmail state role deptId roleList"
@@ -60,7 +60,7 @@ router.get("/list", async (ctx) => {
   if (state && state != "0") params.state = state;
   try {
     // 根据条件查询所有用户列表
-    const query = User.find(params, { _id: 0, password: 0 }); // 不能用await
+    const query = User.find(params, { password: 0 }); // 不能用await
     const list = await query.skip(skipIndex).limit(page.pageSize);
     const total = await User.countDocuments(params);
 
@@ -76,27 +76,26 @@ router.get("/list", async (ctx) => {
   }
 });
 
-// 获取全量用户列表
-router.get("/all/list", async (ctx) => {
-  try {
-    const list = await User.find({}, "userId username userEmail");
-    ctx.body = util.success(list);
-  } catch (error) {
-    ctx.body = util.fail(error.stack);
-  }
-});
+// 获取全量用户列表 可以被上一个函数代替
+// router.get("/all/list", async (ctx) => {
+//   try {
+//     const list = await User.find({}, "userId username userEmail");
+//     ctx.body = util.success(list);
+//   } catch (error) {
+//     ctx.body = util.fail(error.stack);
+//   }
+// });
 
 // 用户删除/批量删除
 router.post("/delete", async (ctx) => {
-  // 待删除的用户Id数组
-  const { userIds } = ctx.request.body;
-  // User.updateMany({ $or: [{ userId: 10001 }, { userId: 10002 }] })
-  const res = await User.updateMany({ userId: { $in: userIds } }, { state: 2 });
-  if (res.nModified) {
-    ctx.body = util.success(res, `共删除成功${res.nModified}条`);
-    return;
+  try {
+    // 待删除的用户Id数组
+    const { _id } = ctx.request.body;
+    const res = await User.findByIdAndRemove({ _id: _id });
+    ctx.body = util.success(res.username, `删除成功`);
+  } catch (error) {
+    ctx.body = util.fail(error, "删除失败");
   }
-  ctx.body = util.fail("删除失败");
 });
 // 用户新增/编辑
 router.post("/operate", async (ctx) => {
@@ -104,6 +103,7 @@ router.post("/operate", async (ctx) => {
     userId,
     username,
     userEmail,
+    password,
     mobile,
     job,
     state,
@@ -134,8 +134,8 @@ router.post("/operate", async (ctx) => {
       try {
         const user = new User({
           userId: doc.sequence_value,
-          username,
-          password: md5("123456"),
+          username: username,
+          password: md5(password),
           userEmail,
           role: 1, // 默认普通用户
           roleList,
@@ -145,7 +145,7 @@ router.post("/operate", async (ctx) => {
           mobile,
         });
         user.save();
-        ctx.body = util.success("", "用户创建成功");
+        ctx.body = util.success(user, "用户创建成功");
       } catch (error) {
         ctx.body = util.fail(error.stack, "用户创建失败");
       }
@@ -188,7 +188,7 @@ async function getMenuList(userRole, roleKeys) {
   } else {
     // 根据用户拥有的角色，获取权限列表
     // 现查找用户对应的角色有哪些
-    const roleList = await Role.find({ id: { $in: roleKeys } });
+    const roleList = await Role.find({ roleName: { $in: roleKeys } });
     let permissionList = [];
     roleList.map((role) => {
       const { checkedKeys, halfCheckedKeys } = role.permissionList;
@@ -198,7 +198,7 @@ async function getMenuList(userRole, roleKeys) {
       ]);
     });
     permissionList = [...new Set(permissionList)];
-    rootList = await Menu.find({ _v: { $in: permissionList } });
+    rootList = await Menu.find({ id: { $in: permissionList } });
   }
   return util.getTreeMenu(rootList, null, []);
 }

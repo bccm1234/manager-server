@@ -12,9 +12,6 @@ const util = require("./utils/util");
 const users = require("./routes/users");
 const roles = require("./routes/roles");
 
-// error handler
-onerror(app);
-
 require("./config/db");
 
 // middlewares
