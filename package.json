@@ -25,8 +25,13 @@
     "pug": "^2.0.3"
   },
   "devDependencies": {
+    "eslint": "^8.18.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "log4js": "^6.3.0",
     "md5": "^2.3.0",
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "prettier": "^2.7.1"
   }
 }
