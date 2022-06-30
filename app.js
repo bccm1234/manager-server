@@ -11,7 +11,7 @@ const koajwt = require("koa-jwt");
 const util = require("./utils/util");
 const users = require("./routes/users");
 const roles = require("./routes/roles");
-
+const data = require("./routes/data");
 require("./config/db");
 
 // middlewares
@@ -54,6 +54,7 @@ router.prefix("/api");
 
 router.use(users.routes(), users.allowedMethods());
 router.use(roles.routes(), roles.allowedMethods());
+router.use(data.routes(), data.allowedMethods());
 app.use(router.routes(), router.allowedMethods());
 
 // error-handling
