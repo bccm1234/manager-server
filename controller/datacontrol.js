@@ -15,9 +15,20 @@ const submitData = async (ctx) => {
 
 const submitFile = async (ctx) => {
   try {
+    let data,
+      res = [];
     // 获取上传文件
     const file = ctx.request.files.file;
-    ctx.body = util.success(file, "上传成功");
+    if (path.extname(file.name) == ".json") {
+      data = JSON.parse(
+        fs.readFileSync(file.filepath, { encoding: "utf8", flag: "r" })
+      );
+      for (params of data) {
+        const r = await Data.create(params);
+        res.push(r);
+      }
+    }
+    ctx.body = util.success(res, "上传成功");
   } catch (error) {
     ctx.body = util.fail(error, "上传失败");
   }
