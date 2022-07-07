@@ -10,7 +10,7 @@ router.prefix("/roles");
 router.get("/list", getList);
 
 // 角色操作：创建、编辑和删除
-router.post("/operate", \operateList);
+router.post("/operate", operateList);
 
 // 权限设置
 router.post("/update/permission", updatePermission);

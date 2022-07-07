@@ -32,7 +32,7 @@ const login = async (ctx) => {
           data,
         },
         "imooc",
-        { expiresIn: "1h" }
+        { expiresIn: "10h" }
       );
       data.token = token;
       ctx.body = util.success(data);
