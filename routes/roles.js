@@ -1,4 +1,8 @@
-const { getList, operateList, updatePermission } = require("../controller/rolescontrol");
+const {
+  getList,
+  operateList,
+  updatePermission,
+} = require("../controller/rolescontrol");
 
 /**
  * 用户管理模块

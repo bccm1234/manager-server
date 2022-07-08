@@ -5,6 +5,7 @@ const Role = require("./../models/roleSchema");
 const util = require("./../utils/util");
 const jwt = require("jsonwebtoken");
 const md5 = require("md5");
+const { compose } = require("koa-convert");
 
 const login = async (ctx) => {
   try {
@@ -195,12 +196,12 @@ function getAction(list) {
   const deep = (arr) => {
     while (arr.length) {
       const item = arr.pop();
-      if (item.action) {
+      if (item.action.length != 0) {
         item.action.map((action) => {
           actionList.push(action.menuCode);
         });
       }
-      if (item.children && !item.action) {
+      if (item.children.length != 0 && item.action.length == 0) {
         deep(item.children);
       }
     }

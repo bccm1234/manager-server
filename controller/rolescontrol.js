@@ -59,7 +59,7 @@ const operateList = async (ctx) => {
 const updatePermission = async (ctx) => {
   const { _id, permissionList } = ctx.request.body;
   try {
-    const params = { permissionList, update: new Date() };
+    const params = { permissionList, updateTime: new Date() };
     const res = await Role.findByIdAndUpdate(_id, params);
     ctx.body = util.success(res, "权限设置成功");
   } catch (error) {
