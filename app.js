@@ -8,11 +8,14 @@ const log4js = require("./utils/log4j");
 const router = require("koa-router")();
 const jwt = require("jsonwebtoken");
 const koajwt = require("koa-jwt");
+const cors = require('koa-cors')
+const statics = require('koa-static')
+const path = require('path')
 const util = require("./utils/util");
 const users = require("./routes/users");
 const roles = require("./routes/roles");
+const materials = require("./routes/materials")
 const data = require("./routes/data");
-const path = require("path");
 const fs = require("fs");
 require("./config/db");
 
@@ -52,6 +55,10 @@ app.use(
     extension: "pug",
   })
 );
+const staticPath = ''
+app.use(statics(
+  path.join(__dirname, staticPath)
+))
 
 // logger
 app.use(async (ctx, next) => {
@@ -77,7 +84,9 @@ router.prefix("/api");
 
 router.use(users.routes(), users.allowedMethods());
 router.use(roles.routes(), roles.allowedMethods());
+router.use(materials.routes(), materials.allowedMethods());
 router.use(data.routes(), data.allowedMethods());
+
 app.use(router.routes(), router.allowedMethods());
 
 // error-handling

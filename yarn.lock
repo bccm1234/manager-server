@@ -1809,6 +1809,11 @@
     "co" "^4.6.0"
     "koa-compose" "^4.1.0"
 
+"koa-cors@^0.0.16":
+  "integrity" "sha512-s15knPxe3AJBi2I/ZMPL0pSqU+PLYLO6k5tI0AqClkzavowvocPlSdFUwaHNqtjHMhsGmiq2tiX/25iILJx9YA=="
+  "resolved" "https://registry.npmmirror.com/koa-cors/-/koa-cors-0.0.16.tgz"
+  "version" "0.0.16"
+
 "koa-is-json@1":
   "integrity" "sha512-+97CtHAlWDx0ndt0J8y3P12EWLwTLMXIfMnYDev3wOTwH/RpBGMlfn4bDXlMEg1u73K6XRE9BbUp+5ZAYoRYWw=="
   "resolved" "https://registry.npmjs.org/koa-is-json/-/koa-is-json-1.0.0.tgz"
@@ -1872,7 +1877,7 @@
 
 "koa-static@^5.0.0":
   "integrity" "sha512-UqyYyH5YEXaJrf9S8E23GoJFQZXkBVJ9zYYMPGz919MSX1KuvAcycIuS0ci150HCoPf4XQVhQ84Qf8xRPWxFaQ=="
-  "resolved" "https://registry.npmjs.org/koa-static/-/koa-static-5.0.0.tgz"
+  "resolved" "https://registry.npmmirror.com/koa-static/-/koa-static-5.0.0.tgz"
   "version" "5.0.0"
   dependencies:
     "debug" "^3.1.0"
@@ -2616,7 +2621,9 @@
   "resolved" "https://registry.npmmirror.com/punycode/-/punycode-2.1.1.tgz"
   "version" "2.1.1"
 
+
 "qs@^6.4.0":
+
   "integrity" "sha512-O5RlPh0VFtR78y79rgcgKK4wbAI0C5zGVLztOIdpWX6ep368q5Hv6XRxDvXuZ9q3C6v+e3n8UfZZJw7IIG27eQ=="
   "resolved" "https://registry.npmjs.org/qs/-/qs-6.10.5.tgz"
   "version" "6.10.5"
@@ -2629,6 +2636,7 @@
   "version" "6.9.3"
 
 "raw-body@^2.2.0":
+
   "integrity" "sha512-qqJBtEyVgS0ZmPGdCFPWJ3FreoqvG4MVQln/kCgF7Olq95IbOp0/BWyMwbdtn4VTvkM8Y7khCQ2Xgk/tcrCXig=="
   "resolved" "https://registry.npmjs.org/raw-body/-/raw-body-2.5.1.tgz"
   "version" "2.5.1"
