@@ -4,19 +4,20 @@ const views = require("koa-views");
 const json = require("koa-json");
 const body = require("koa-body");
 const logger = require("koa-logger");
-const log4js = require("./utils/log4j");
 const router = require("koa-router")();
-const jwt = require("jsonwebtoken");
 const koajwt = require("koa-jwt");
-const cors = require('koa-cors')
-const statics = require('koa-static')
-const path = require('path')
+const jwt = require("jsonwebtoken");
+const cors = require("koa-cors");
+const statics = require("koa-static");
+const path = require("path");
+const fs = require("fs");
 const util = require("./utils/util");
+const log4js = require("./utils/log4j");
 const users = require("./routes/users");
 const roles = require("./routes/roles");
-const materials = require("./routes/materials")
+const materials = require("./routes/materials");
 const data = require("./routes/data");
-const fs = require("fs");
+
 require("./config/db");
 
 // middlewares
@@ -50,15 +51,8 @@ app.use(json());
 app.use(logger());
 app.use(require("koa-static")(__dirname + "/public"));
 
-app.use(
-  views(__dirname + "/views", {
-    extension: "pug",
-  })
-);
-const staticPath = ''
-app.use(statics(
-  path.join(__dirname, staticPath)
-))
+const staticPath = "";
+app.use(statics(path.join(__dirname, staticPath)));
 
 // logger
 app.use(async (ctx, next) => {
