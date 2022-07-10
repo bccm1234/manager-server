@@ -7,7 +7,6 @@ const logger = require("koa-logger");
 const router = require("koa-router")();
 const koajwt = require("koa-jwt");
 const jwt = require("jsonwebtoken");
-const cors = require("koa-cors");
 const statics = require("koa-static");
 const path = require("path");
 const fs = require("fs");
