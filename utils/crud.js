@@ -7,12 +7,16 @@ const util = require("./util");
  * @param {*} ctx
  * @returns
  */
-const add = async (model, params, ctx) => {
+const add = async (model, params, ctx,msg="添加") => {
   try {
     const res = await model.create(params);
-    ctx.body = util.success(res, `添加成功`);
+    if(res){
+      ctx.body = util.success(res, `${msg}成功`);
+    } else {
+      ctx.body = util.fail(`${msg}失败`);
+    }
   } catch (error) {
-    ctx.body = util.fail(error, `添加失败`);
+    ctx.body = util.fail(`${msg}异常`,500,error);
   }
 };
 /**
@@ -23,16 +27,16 @@ const add = async (model, params, ctx) => {
  * @param {*} ctx
  * @returns
  */
-const update = async (model, query, params, ctx) => {
+const update = async (model, query, params, ctx,msg="修改") => {
   try {
     const res = await model.updateOne(query, params);
     if (res.modifiedCount > 0) {
-      ctx.body = util.success(res, `修改成功`);
+      ctx.body = util.success(res, `${msg}成功`);
     } else {
-      ctx.body = util.fail(res, `结果不符合预期`);
+      ctx.body = util.fail(`${msg}失败`,res);
     }
   } catch (error) {
-    ctx.body = util.fail(error, `修改失败`);
+    ctx.body = util.fail(`${msg}异常`,500,error);
   }
 };
 /**
@@ -42,12 +46,16 @@ const update = async (model, query, params, ctx) => {
  * @param {*} ctx
  * @returns
  */
-const del = async (model, query, ctx) => {
+const del = async (model, query, ctx,msg="删除") => {
   try {
     const res = await model.findOneAndDelete(query);
-    ctx.body = util.success(res, `删除成功`);
+    if(res){
+      ctx.body = util.success(res, `${msg}成功`);
+    }else{
+      ctx.body = util.fail(`${msg}失败`);
+    }
   } catch (error) {
-    ctx.body = util.fail(error, `删除失败`);
+    ctx.body = util.fail(`${msg}异常`,500,error);
   }
 };
 /**
@@ -59,32 +67,40 @@ const del = async (model, query, ctx) => {
  * @param {*} ctx 上下文
  * @returns
  */
-const find = async (model, query, projection = null, ctx) => {
+const find = async (model, query, ctx, projection, sort,msg="查询") => {
   try {
-    const res = await model.find(query, projection);
-    ctx.body = util.success(res, `查询成功`);
+    const res = await model.find(query, projection).sort(sort);
+    if(res){
+      ctx.body = util.success(res, `${msg}成功`);
+    }else{
+      ctx.body = util.fail(`${msg}失败`);
+    }
   } catch (error) {
-    ctx.body = util.fail(error, `查询失败`);
+    ctx.body = util.fail(`${msg}异常`,500,error);
   }
 };
 /**
  * 分页查询
  */
-const findPage = async (model, query, projection = null, ctx) => {
-  const { page, skipIndex } = util.pager(ctx.request.query);
+const findPage = async (model, query, ctx, projection,sort, msg="分页查询") => {
+  const {pageNum,pageSize} = ctx.request.query
+  const { page, skipIndex } = util.pager({pageNum,pageSize});
   try {
-    const queryResult = model.find(query);
-    const list = await queryResult.skip(skipIndex).limit(page.pageSize);
+    const list = await model.find(query,projection).skip(skipIndex).limit(page.pageSize).sort(sort);
     const total = await model.countDocuments(query);
-    ctx.body = util.success({
-      list,
-      page: {
-        ...page,
-        total,
-      },
-    });
+    if(list.length){
+      ctx.body = util.success({
+        list,
+        page: {
+          ...page,
+          total,
+        },
+      },`${msg}成功`);
+    }else{
+      ctx.body = util.fail(`${msg}失败`,40001,{page:{...page,total}});
+    }
   } catch (error) {
-    ctx.body = util.fail(error, `分页查询失败`);
+    ctx.body = util.fail(`${msg}异常`,500,error);
   }
 };
 
@@ -95,12 +111,16 @@ const findPage = async (model, query, projection = null, ctx) => {
  * @param {*} ctx
  * @returns
  */
-const findOne = async (model, query, ctx) => {
+const findOne = async (model, query, ctx, msg="单个数据查询") => {
   try {
     const res = await model.findOne(query);
-    ctx.body = util.success(res, `单个数据查询成功`);
+    if(res){
+      ctx.body = util.success(res, `${msg}成功`);
+    }else {
+      ctx.body = util.fail(`${msg}失败`);
+    }
   } catch (error) {
-    ctx.body = util.fail(error, `单个数据查询失败`);
+    ctx.body = util.fail(`${msg}异常`,500,error);
   }
 };
 
