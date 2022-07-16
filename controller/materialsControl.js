@@ -85,6 +85,7 @@ const findMaterialsAbstracts = async (ctx) => {
 const dealParams = function (ctx) {
   let { Input, crystalSystem, spaceGroup, millerIndice, termination, sort } =
     ctx.request.query;
+  if (sort) sort = JSON.parse(sort);
   if (!sort) sort = [1, 1, 1, 1, 1, 1, 1];
   let inputObj = {};
   let inputArr = [];

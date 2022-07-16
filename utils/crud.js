@@ -99,7 +99,7 @@ const findPage = async (
       .limit(page.pageSize)
       .sort(sort);
     const total = await model.countDocuments(query);
-    if (List.length) {
+    if (List.length > 0) {
       ctx.body = util.success(
         {
           List,
@@ -111,7 +111,9 @@ const findPage = async (
         `${msg}成功`
       );
     } else {
-      ctx.body = util.fail(`${msg}失败`, 40001, { page: { ...page, total } });
+      ctx.body = util.fail(`${msg}没有查询到数据`, 40001, {
+        page: { ...page, total },
+      });
     }
   } catch (error) {
     ctx.body = util.fail(`${msg}异常`, 500, error);
