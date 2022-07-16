@@ -7,16 +7,16 @@ const util = require("./util");
  * @param {*} ctx
  * @returns
  */
-const add = async (model, params, ctx,msg="添加") => {
+const add = async (model, params, ctx, msg = "添加") => {
   try {
     const res = await model.create(params);
-    if(res){
+    if (res) {
       ctx.body = util.success(res, `${msg}成功`);
     } else {
       ctx.body = util.fail(`${msg}失败`);
     }
   } catch (error) {
-    ctx.body = util.fail(`${msg}异常`,500,error);
+    ctx.body = util.fail(`${msg}异常`, 500, error);
   }
 };
 /**
@@ -27,16 +27,16 @@ const add = async (model, params, ctx,msg="添加") => {
  * @param {*} ctx
  * @returns
  */
-const update = async (model, query, params, ctx,msg="修改") => {
+const update = async (model, query, params, ctx, msg = "修改") => {
   try {
     const res = await model.updateOne(query, params);
     if (res.modifiedCount > 0) {
       ctx.body = util.success(res, `${msg}成功`);
     } else {
-      ctx.body = util.fail(`${msg}失败`,res);
+      ctx.body = util.fail(`${msg}失败`, res);
     }
   } catch (error) {
-    ctx.body = util.fail(`${msg}异常`,500,error);
+    ctx.body = util.fail(`${msg}异常`, 500, error);
   }
 };
 /**
@@ -46,16 +46,16 @@ const update = async (model, query, params, ctx,msg="修改") => {
  * @param {*} ctx
  * @returns
  */
-const del = async (model, query, ctx,msg="删除") => {
+const del = async (model, query, ctx, msg = "删除") => {
   try {
     const res = await model.findOneAndDelete(query);
-    if(res){
+    if (res) {
       ctx.body = util.success(res, `${msg}成功`);
-    }else{
+    } else {
       ctx.body = util.fail(`${msg}失败`);
     }
   } catch (error) {
-    ctx.body = util.fail(`${msg}异常`,500,error);
+    ctx.body = util.fail(`${msg}异常`, 500, error);
   }
 };
 /**
@@ -67,40 +67,54 @@ const del = async (model, query, ctx,msg="删除") => {
  * @param {*} ctx 上下文
  * @returns
  */
-const find = async (model, query, ctx, projection, sort,msg="查询") => {
+const find = async (model, query, ctx, projection, sort, msg = "查询") => {
   try {
     const res = await model.find(query, projection).sort(sort);
-    if(res){
+    if (res) {
       ctx.body = util.success(res, `${msg}成功`);
-    }else{
+    } else {
       ctx.body = util.fail(`${msg}失败`);
     }
   } catch (error) {
-    ctx.body = util.fail(`${msg}异常`,500,error);
+    ctx.body = util.fail(`${msg}异常`, 500, error);
   }
 };
 /**
  * 分页查询
  */
-const findPage = async (model, query, ctx, projection,sort, msg="分页查询") => {
-  const {pageNum,pageSize} = ctx.request.query
-  const { page, skipIndex } = util.pager({pageNum,pageSize});
+const findPage = async (
+  model,
+  query,
+  ctx,
+  projection,
+  sort,
+  msg = "分页查询"
+) => {
+  const { pageNum = 1, pageSize = 10 } = ctx.request.query;
+  const { page, skipIndex } = util.pager({ pageNum, pageSize });
   try {
-    const list = await model.find(query,projection).skip(skipIndex).limit(page.pageSize).sort(sort);
+    const List = await model
+      .find(query, projection)
+      .skip(skipIndex)
+      .limit(page.pageSize)
+      .sort(sort);
     const total = await model.countDocuments(query);
-    if(list.length){
-      ctx.body = util.success({
-        list,
-        page: {
-          ...page,
-          total,
+    if (List.length) {
+      ctx.body = util.success(
+        {
+          List,
+          page: {
+            ...page,
+            total,
+          },
         },
-      },`${msg}成功`);
-    }else{
-      ctx.body = util.fail(`${msg}失败`,40001,{page:{...page,total}});
+        `${msg}成功`
+      );
+    } else {
+      ctx.body = util.fail(`${msg}失败`, 40001, { page: { ...page, total } });
     }
   } catch (error) {
-    ctx.body = util.fail(`${msg}异常`,500,error);
+    ctx.body = util.fail(`${msg}异常`, 500, error);
   }
 };
 
@@ -111,16 +125,16 @@ const findPage = async (model, query, ctx, projection,sort, msg="分页查询") 
  * @param {*} ctx
  * @returns
  */
-const findOne = async (model, query, ctx, msg="单个数据查询") => {
+const findOne = async (model, query, ctx, msg = "单个数据查询") => {
   try {
     const res = await model.findOne(query);
-    if(res){
+    if (res) {
       ctx.body = util.success(res, `${msg}成功`);
-    }else {
+    } else {
       ctx.body = util.fail(`${msg}失败`);
     }
   } catch (error) {
-    ctx.body = util.fail(`${msg}异常`,500,error);
+    ctx.body = util.fail(`${msg}异常`, 500, error);
   }
 };
 

@@ -54,9 +54,9 @@ const findMaterialsAbstracts = async (ctx) => {
       await crud.find(Slabs, slabObj, ctx, "abs", sortObj);
       const slabList = ctx.body.data;
       let bothList = [];
-      if (sortObj["abs.model"] === "1") {
+      if (sortObj["abs.model"] == "1") {
         bothList = [...bulkList, ...slabList];
-      } else if (sortObj["abs.model"] === "-1") {
+      } else if (sortObj["abs.model"] == "-1") {
         bothList = [...slabList, ...bulkList];
       }
       const skipIndex = (pageNum - 1) * pageSize;
@@ -85,7 +85,7 @@ const findMaterialsAbstracts = async (ctx) => {
 const dealParams = function (ctx) {
   let { Input, crystalSystem, spaceGroup, millerIndice, termination, sort } =
     ctx.request.query;
-  if (!sort) sort = "1,1,1,1,1,1,1";
+  if (!sort) sort = [1, 1, 1, 1, 1, 1, 1];
   let inputObj = {};
   let inputArr = [];
   let inputArrLength = 0;
@@ -141,7 +141,6 @@ const dealParams = function (ctx) {
     }
   }
   //处理sort
-  sort = sort.split(",");
   let sortObj = {
     "abs.id": sort[0],
     "abs.model": sort[1],
