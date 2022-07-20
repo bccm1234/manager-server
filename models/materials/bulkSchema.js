@@ -55,7 +55,6 @@ const schema = mongoose.Schema({
             bandgap:Number,
             bandurl:String,
             dosurl:String,
-            cifurl: String,
             cubeurl:String,
             calsys:{
                 func:String,
