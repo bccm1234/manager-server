@@ -7,7 +7,6 @@ const logger = require("koa-logger");
 const router = require("koa-router")();
 const koajwt = require("koa-jwt");
 const jwt = require("jsonwebtoken");
-const statics = require("koa-static");
 const path = require("path");
 const fs = require("fs");
 const util = require("./utils/util");
@@ -16,10 +15,12 @@ const users = require("./routes/users");
 const roles = require("./routes/roles");
 const materials = require("./routes/materials");
 const data = require("./routes/data");
+const cors = require("koa2-cors");
 
 require("./config/db");
 
 // middlewares
+app.use(cors());
 app.use(
   body({
     multipart: true, // 支持文件上传
@@ -48,11 +49,19 @@ app.use(
 );
 app.use(json());
 app.use(logger());
+//静态资源拦截器
+app.use(async (ctx, next) => {
+  if (ctx.request.url.includes("/vasp") || ctx.request.url.includes("/echart")) {
+    const authorization = ctx.request.headers.authorization;
+    const { data } = util.decoded(authorization);
+    if (data) {
+      await next();
+    }
+  } else {
+    await next();
+  }
+});
 app.use(require("koa-static")(__dirname + "/public"));
-
-const staticPath = "";
-app.use(statics(path.join(__dirname, staticPath)));
-
 // logger
 app.use(async (ctx, next) => {
   log4js.info(`get params:${JSON.stringify(ctx.request.query)}`);
@@ -66,13 +75,11 @@ app.use(async (ctx, next) => {
     }
   });
 });
-
 app.use(
   koajwt({ secret: "imooc" }).unless({
     path: [/^\/api\/users\/login/],
   })
 );
-
 router.prefix("/api");
 
 router.use(users.routes(), users.allowedMethods());

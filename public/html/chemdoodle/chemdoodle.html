@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ChemDoodle</title>
+    <link rel="stylesheet" href="./css/ChemDoodleWeb.css" type="text/css" />
+    <script type="text/javascript" src="./js/ChemDoodleWeb.js"></script>
+    <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script type="text/javascript" src="./js/crystal.js"></script>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      .outBox {
+        width: 420px;
+        height: 420px;
+        border-radius: 10px;
+        background: #eef5ff;
+        box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+      }
+      .containerBox {
+        width: 420px;
+        height: 420px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: inset 0px 0px 10px 0px rgba(0, 0, 0, 0.3);
+      }
+    </style>
+  </head>
+
+  <body>
+    <center>
+      <div class="outBox">
+        <div class="containerBox">
+          <script>
+            let idNumber = window.location.search;
+            let url = idNumber.substring(1, idNumber.length);
+            let cifUrl = `../..${url}`;
+            let xyz = [2, 2, 2];
+            crystalPrepare(cifUrl);
+            modelCreate();
+          </script>
+        </div>
+      </div>
+    </center>
+  </body>
+</html>

@@ -43,7 +43,6 @@ const operateList = async (ctx) => {
     } else {
       if (_id) {
         res = await Role.findByIdAndRemove(_id);
-        console.log("eeeee", res);
         info = "删除成功";
       } else {
         ctx.body = util.fail("缺少参数params: _id");

@@ -1929,6 +1929,11 @@
     "type-is" "^1.6.16"
     "vary" "^1.1.2"
 
+"koa2-cors@^2.0.6":
+  "integrity" "sha512-JRCcSM4lamM+8kvKGDKlesYk2ASrmSTczDtGUnIadqMgnHU4Ct5Gw7Bxt3w3m6d6dy3WN0PU4oMP43HbddDEWg=="
+  "resolved" "https://registry.npmmirror.com/koa2-cors/-/koa2-cors-2.0.6.tgz"
+  "version" "2.0.6"
+
 "latest-version@^3.0.0":
   "integrity" "sha512-Be1YRHWWlZaSsrz2U+VInk+tO0EwLIyV+23RhWLINJYwg/UIikxjlj3MhH37/6/EDCAusjajvMkMMUXRaMWl/w=="
   "resolved" "https://registry.npmjs.org/latest-version/-/latest-version-3.1.0.tgz"
@@ -2621,9 +2626,7 @@
   "resolved" "https://registry.npmmirror.com/punycode/-/punycode-2.1.1.tgz"
   "version" "2.1.1"
 
-
 "qs@^6.4.0":
-
   "integrity" "sha512-O5RlPh0VFtR78y79rgcgKK4wbAI0C5zGVLztOIdpWX6ep368q5Hv6XRxDvXuZ9q3C6v+e3n8UfZZJw7IIG27eQ=="
   "resolved" "https://registry.npmjs.org/qs/-/qs-6.10.5.tgz"
   "version" "6.10.5"
@@ -2636,7 +2639,6 @@
   "version" "6.9.3"
 
 "raw-body@^2.2.0":
-
   "integrity" "sha512-qqJBtEyVgS0ZmPGdCFPWJ3FreoqvG4MVQln/kCgF7Olq95IbOp0/BWyMwbdtn4VTvkM8Y7khCQ2Xgk/tcrCXig=="
   "resolved" "https://registry.npmjs.org/raw-body/-/raw-body-2.5.1.tgz"
   "version" "2.5.1"

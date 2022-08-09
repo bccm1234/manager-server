@@ -14,7 +14,7 @@ const schema = mongoose.Schema({
   opt: {
     param1: {
       source: String,
-      lattice: [],
+      lattice: Array,
       maxtrix: String,
       crystalSystem: String,
       spaceGroup: String,
@@ -47,44 +47,43 @@ const schema = mongoose.Schema({
         code: String,
         fileurl: String,
       },
-    },
+    }
   },
   ele: {
-    param1: {
-      source: String,
-      bandgap: Number,
-      bandurl: String,
-      dosurl: String,
-      cifurl: String,
-      cubeurl: String,
-      calsys: {
-        func: String,
-        encut: Number,
-        kpoint: Number,
-        u: String,
-        magnetic: String,
-        code: String,
-        fileurl: String,
+      param1:{
+          source:String,
+          bandgap:Number,
+          bandurl:String,
+          dosurl:String,
+          cubeurl:String,
+          calsys:{
+              func:String,
+              encut:Number,
+              kpoint:Number,
+              u:String,
+              magnetic:String,
+              code:String,
+              fileurl:String
+          }
       },
-    },
-    param2: {
-      source: String,
-      bandgap: Number,
-      bandurl: String,
-      dosurl: String,
-      cifurl: String,
-      cubeurl: String,
-      calsys: {
-        func: String,
-        encut: Number,
-        kpoint: Number,
-        u: String,
-        magnetic: String,
-        code: String,
-        fileurl: String,
-      },
-    },
-  },
+      param2:{
+          source:String,
+          bandgap:Number,
+          bandurl:String,
+          dosurl:String,
+          cifurl: String,
+          cubeurl:String,
+          calsys:{
+              func:String,
+              encut:Number,
+              kpoint:Number,
+              u:String,
+              magnetic:String,
+              code:String,
+              fileurl:String
+          }
+      }
+  }
 });
 
 const Bulks = mongoose.model("bulk", schema, "bulks");
